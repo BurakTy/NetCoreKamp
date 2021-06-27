@@ -12,7 +12,6 @@ namespace ConsoleUI
             // DTO -- Data Transformation Object
             // ProducTest();
             // IoC 
-
             //CategoryTest();
         }
 
@@ -29,12 +28,18 @@ namespace ConsoleUI
         private static void ProducTest()
         {
             ProductManager productManager = new ProductManager(new EfProductDal());
-
-            //foreach (var product in productManager.GetProductDetails())
-            //{
-            //    Console.WriteLine(product.ProductName +"/"+ product.CategoryName);
-            //}
-
+            var result = productManager.GetProductDetails();
+            if (result.Success)
+            {
+                foreach (var product in result.Data)
+                {
+                    Console.WriteLine(product.ProductName + "/" + product.CategoryName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Success + " - " +result.Message);
+            }
         }
        
     }
