@@ -9,10 +9,11 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            //ProducTest();
+            // DTO -- Data Transformation Object
+            ProducTest();
             // IoC 
 
-            CategoryTest();
+            //CategoryTest();
         }
 
         private static void CategoryTest()
@@ -29,9 +30,9 @@ namespace ConsoleUI
         {
             ProductManager productManager = new ProductManager(new EfProductDal());
 
-            foreach (var item in productManager.GetByUnitePrice(70, 100))
+            foreach (var product in productManager.GetProductDetails())
             {
-                Console.WriteLine(item.ProductName);
+                Console.WriteLine(product.ProductName +"/"+ product.CategoryName);
             }
 
         }
