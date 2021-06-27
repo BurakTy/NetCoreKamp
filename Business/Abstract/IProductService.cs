@@ -9,11 +9,11 @@ namespace Business.Abstract
 {
     public interface IProductService
     {
-        List<Product> GetAll();
-        List<Product> GetAllByCategory(int id);
-        List<Product> GetByUnitePrice(decimal min, decimal max);
-        List<ProductDetailDto> GetProductDetails();
-        Product GetByID(int productId);
+        IDataResult<List<Product>> GetAll();
+        IDataResult<List<Product>> GetAllByCategory(int id);
+        IDataResult<List<Product>> GetByUnitePrice(decimal min, decimal max);
+        IDataResult<List<ProductDetailDto>> GetProductDetails();
+        IDataResult< Product> GetByID(int productId);
         IResult Add(Product product);
     }
 }

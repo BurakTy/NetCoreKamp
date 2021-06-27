@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.Constants;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -24,37 +25,37 @@ namespace Business.Concrete
 
             if (product.ProductName.Length < 2)
             {
-                return new ErrorResult("Ürün ismi en az 2 karakter olmalıdır");
+                return new ErrorResult(Messages.ProductNameInvalid);
             }
             _ProductDal.Add(product);
-            return new SuccessResult("Ürün Eklendi");
+            return new SuccessResult(Messages.ProductAdded);
         }
 
-        public List<Product> GetAll()
+        public IDataResult<List<Product>> GetAll()
         {
             // if-else kodları
             // Yetkilemeler
-            return _ProductDal.GetAll();
+            return new DataResult<List<Product>>(_ProductDal.GetAll(),true,"Ürünler Listlendi");
         }
 
-        public List<Product> GetAllByCategory(int id)
+        public IDataResult<List<Product>> GetAllByCategory(int id)
         {
-            return _ProductDal.GetAll(p => p.CategoryId == id);
+            return new DataResult<List<Product>>(_ProductDal.GetAll(p => p.CategoryId == id),true);
         }
 
-        public Product GetByID(int productId)
+        public IDataResult<Product> GetByID(int productId)
         {
-            return _ProductDal.Get(p => p.ProductId == productId);
+            return new DataResult<Product>(_ProductDal.Get(p => p.ProductId == productId),true);
         }
 
-        public List<Product> GetByUnitePrice(decimal min, decimal max)
+        public IDataResult<List<Product>> GetByUnitePrice(decimal min, decimal max)
         {
-            return _ProductDal.GetAll(p => p.UnitPrice >= min && p.UnitPrice <= max);
+            return new DataResult<List<Product>>(_ProductDal.GetAll(p => p.UnitPrice >= min && p.UnitPrice <= max),true);
         }
 
-        public List<ProductDetailDto> GetProductDetails()
+        public IDataResult<List<ProductDetailDto>> GetProductDetails()
         {
-            return _ProductDal.GetProductDetails();
+            return new DataResult<List<ProductDetailDto>>(_ProductDal.GetProductDetails(),true);
         }
     }
 }
