@@ -32,8 +32,9 @@ namespace WebAPI
             // Autofac, Ninject,CastleWindsor, StructureMap,lightInject,DryInject----> IoC Container
            // AOP bir metodun sonunda baþýnda hata anýnda çalýþan iþlemler  --> bu þekilde belirtiliyor [LogAsper] 
             services.AddControllers();
-            services.AddSingleton<IProductService, ProductManager>();
-            services.AddSingleton<IProductDal, EfProductDal>();
+            //services.AddSingleton<IProductService, ProductManager>();
+            //services.AddSingleton<IProductDal, EfProductDal>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
