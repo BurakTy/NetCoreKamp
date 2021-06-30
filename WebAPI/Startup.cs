@@ -30,7 +30,7 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             // Autofac, Ninject,CastleWindsor, StructureMap,lightInject,DryInject----> IoC Container
-           // AOP bir metodun sonunda baþýnda hata anýnda çalýþan iþlemler  --> bu þekilde belirtiliyor [LogAsper] 
+            // AOP bir metodun sonunda baþýnda hata anýnda çalýþan iþlemler  --> bu þekilde belirtiliyor [LogAsper] 
             services.AddControllers();
             //services.AddSingleton<IProductService, ProductManager>();
             //services.AddSingleton<IProductDal, EfProductDal>();
@@ -50,6 +50,7 @@ namespace WebAPI
             app.UseRouting();
 
             app.UseAuthorization();
+           
 
             app.UseEndpoints(endpoints =>
             {

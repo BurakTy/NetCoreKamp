@@ -27,14 +27,14 @@ namespace Business.Concrete
             _productDal = productDal;
             _categoryService = categoryService;
         }
-
+        //Claim  --> yetkileri böyle adlandırıyoruz (product.add,admin)
+     //   [SecuredOperation("product.add,admin"]
         [ValidationAspect(typeof(ProductValidator))] // Attribute metoda anlam katmak isteyen yapılar
         public IResult Add(Product product)
         {
             //iş Kodları -- business codes
             //  ValidationTool.Validate(new ProductValidator(), product); --> yukarıya ValidationAspect yaparak bunu taşımış olduk
           
-            
             IResult result = BussinesRules.Run(
                 CheckIfProductExist(product.ProductName),               // Aynı isimde ürün eklenemez
                 CheckIfProductCountCategoryCorrect(product.CategoryId),  // Bir Kategoriye belli sayıda ürün eklenmeli burada örn:15
