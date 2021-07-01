@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Business.BussnessAspects.Autofac;
 using Business.CCS;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
@@ -28,7 +29,7 @@ namespace Business.Concrete
             _categoryService = categoryService;
         }
         //Claim  --> yetkileri böyle adlandırıyoruz (product.add,admin)
-     //   [SecuredOperation("product.add,admin"]
+        [SecuredOperation("product.add,admin")]
         [ValidationAspect(typeof(ProductValidator))] // Attribute metoda anlam katmak isteyen yapılar
         public IResult Add(Product product)
         {
