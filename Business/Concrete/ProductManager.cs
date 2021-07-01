@@ -3,6 +3,8 @@ using Business.BussnessAspects.Autofac;
 using Business.CCS;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Bussines;
@@ -31,6 +33,7 @@ namespace Business.Concrete
         //Claim  --> yetkileri böyle adlandırıyoruz (product.add,admin)
         [SecuredOperation("product.add,admin")]
         [ValidationAspect(typeof(ProductValidator))] // Attribute metoda anlam katmak isteyen yapılar
+        [CacheRemoveAspect("IProductService.Get")] // Cache deki keyinde "IProductService.Get" geçen bütün verileri siler
         public IResult Add(Product product)
         {
             //iş Kodları -- business codes
@@ -69,6 +72,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.CategoryId == id));
         }
 
+        [CacheAspect]
         public IDataResult<Product> GetByID(int productId)
         {
             return new SuccessDataResult<Product>(_productDal.Get(p => p.ProductId == productId));
@@ -85,6 +89,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(ProductValidator))]
+        [CacheRemoveAspect("IProductService.Get")]
         public IResult Update(Product product)
         {
             if (CheckIfProductCountCategoryCorrect(product.CategoryId).Success)
@@ -123,6 +128,11 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.CategoryLimitExceded);
             }
             return new SuccessResult();
+        }
+        [TransactionScopeAspect]
+        public IResult AddTransactionalTest(Product product)
+        {
+            throw new NotImplementedException();
         }
     }
 }

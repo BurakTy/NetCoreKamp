@@ -1,7 +1,7 @@
 ﻿using Core.Utilities.IoC;
 using Microsoft.Extensions.Caching.Memory;
 using System;
-using Microsoft.Extensions.DependencyInjection
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Linq;
