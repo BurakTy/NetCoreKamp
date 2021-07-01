@@ -51,7 +51,7 @@ namespace Business.Concrete
 
 
         }
-
+        [CacheAspect] // key value => key cache ismi 
         public IDataResult<List<Product>> GetAll()
         {
             // if-else kodları
