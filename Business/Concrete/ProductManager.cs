@@ -31,7 +31,7 @@ namespace Business.Concrete
             _categoryService = categoryService;
         }
         //Claim  --> yetkileri böyle adlandırıyoruz (product.add,admin)
-        [SecuredOperation("product.add,admin")]
+       // [SecuredOperation("product.add,admin")]
         [ValidationAspect(typeof(ProductValidator))] // Attribute metoda anlam katmak isteyen yapılar
         [CacheRemoveAspect("IProductService.Get")] // Cache deki keyinde "IProductService.Get" geçen bütün verileri siler
         public IResult Add(Product product)
@@ -54,13 +54,14 @@ namespace Business.Concrete
 
 
         }
+
         [CacheAspect] // key value => key cache ismi 
         public IDataResult<List<Product>> GetAll()
         {
             // if-else kodları
             // Yetkilemeler
 
-            if (DateTime.Now.Hour == 02)
+            if (DateTime.Now.Hour == 05)
             {
                 return new ErrorDataResult<List<Product>>(Messages.MaintenanceTime);
             }
@@ -69,7 +70,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Product>> GetAllByCategory(int id)
         {
-            return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.CategoryId == id));
+            return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.CategoryId == id),Messages.ProductsListed);
         }
 
         [CacheAspect]

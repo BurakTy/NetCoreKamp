@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
@@ -30,12 +31,13 @@ namespace WebAPI.Controllers
         {
             //// Dependency chain --  IProductService i yukarı taşıyarak bundan kurtulduk
             //IProductService productService = new ProductManager( new EfProductDal());
+            Thread.Sleep(1000);
             var result =_productService.GetAll();
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
-            return BadRequest(result.Message);
+            return BadRequest(result);
         }
         [HttpGet("getbyid")]
         public IActionResult GetById(int id)
@@ -43,10 +45,34 @@ namespace WebAPI.Controllers
             var result = _productService.GetByID(id);
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(result);
             }
-            return  BadRequest(result.Message);
+            return  BadRequest(result);
         }
+        
+        [HttpGet("getbycategory")]
+        public IActionResult GetByCategory(int categoryId)
+        {
+            var result = _productService.GetAllByCategory(categoryId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return  BadRequest(result);
+        }
+
+
+        [HttpGet("getproductdetails")]
+        public IActionResult GetProductDetails()
+        {
+            var result = _productService.GetProductDetails();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
 
         [HttpPost("add")]
         public IActionResult Add(Product product)
